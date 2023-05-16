@@ -7,12 +7,8 @@ canvas.width = window.innerWidth - 20
 canvas.height = window.innerHeight - 20
 tileWidth = (window.innerWidth - 20) / 20
 tileHeight = (window.innerHeight - 20) / 20
-var qwe = 0
-// var restart = document.createElement("BUTTON");
-//     restart.innerHTML = "Restart";
-//     // restart.style.display = 'none'
-//     restart.style.left = 80
-//     restart.style.top = 80
+
+
 win = false
 var tilesFilled = 0
 var keys = [0, 0, 0, 0]
@@ -60,9 +56,7 @@ class Ground {
         this.height = innerHeight / 20
     }
     draw() {
-        // console.log(this.position.x)
         ctx.fillStyle = 'blue'
-        // ctx.fill()
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }
@@ -85,7 +79,7 @@ class Dots {
 }
 // Enemy Ball
 class enemyBall {
-    constructor({ position, velocity, color }) {
+        constructor({ position, velocity, color }) {
         this.position = position
         this.velocity = velocity
         this.radius = 25
@@ -137,7 +131,6 @@ game.forEach((row, i) => {
     row.forEach((symbol, j) => {
         switch (symbol) {
             case 1:
-                // console.log(i + '  ' + j)
                 tiles.push(
                     new Ground({
                         position: {
@@ -162,7 +155,6 @@ while (game[ball_y][ball_x] != 0) {
     ball_x = Math.floor(Math.random() * 20)
     ball_y = Math.floor(Math.random() * 20)
 }
-console.log(ball_x + " " + ball_y);
 
 
 // instance of enemy balls
@@ -189,7 +181,6 @@ while (game[ball_y][ball_x] != 0) {
     ball_x = Math.floor(Math.random() * 20)
     ball_y = Math.floor(Math.random() * 20)
 }
-console.log(ball_x + " " + ball_y);
 
 // instance of enemy balls
 var enemyBall2 = new enemyBall({
@@ -230,9 +221,10 @@ var player = new Player({
 
 player.draw();
 enemyBall1.draw();
-enemy1Velocity();
+enemyBallVelocity(enemyBall1)
 enemyBall2.draw();
-enemy2Velocity();
+enemyBallVelocity(enemyBall2)
+
 updateGround();
 
 function updateGround() {
@@ -242,7 +234,6 @@ function updateGround() {
         row.forEach((symbol, j) => {
             switch (symbol) {
                 case 1:
-                    // console.log(i + '  ' + j)
                     tile = new Ground({
                         position: {
                             x: tileWidth * j,
@@ -259,8 +250,6 @@ function updateGround() {
                     checkOutBoundsEnemyBall(tile);
                     tilesFilled++;
                     if (game[tile.position.ith][tile.position.jth] == 0) {
-
-                        // tiles.pop();
                     }
                     else {
                         tile.draw();
@@ -270,28 +259,12 @@ function updateGround() {
             }
         })
     })
-
-    // tiles.forEach(tile => {
-
-    //     checkOutBoundsEnemyBall(tile);
-    //     if (game[tile.position.ith][tile.position.jth] == 0) {
-
-    //         // tiles.pop();
-    //     }
-    //     else {
-    //         tile.draw();
-    //     }
-
-    // })
-
-
     checkOutBoundsBallS();
 
 }
 
 // game logics
-
-function enemy1Velocity() {
+function enemyBallVelocity(enemyBall){
     sign = Math.floor(Math.random() * 4)
 
     vx1 = Math.floor(Math.random() * 3) + 1
@@ -300,21 +273,12 @@ function enemy1Velocity() {
     else if (sign == 1) { vx1 = vx1 * (-1); }
     else if (sign == 2) { vy1 = vy1 * (-1) }
 
-    enemyBall1.velocity.x = vx1;
-    enemyBall1.velocity.y = vy1;
+    enemyBall.velocity.x = vx1;
+    enemyBall.velocity.y = vy1;
 }
-function enemy2Velocity() {
-    sign = Math.floor(Math.random() * 4)
 
-    vx2 = Math.floor(Math.random() * 3) + 1
-    vy2 = Math.floor(Math.random() * 3) + 1
-    if (sign == 0) { vx2 = vx2 * (-1); vy2 = vy2 * (-1) }
-    else if (sign == 1) { vx2 = vx2 * (-1); }
-    else if (sign == 2) { vy2 = vy2 * (-1) }
-
-    enemyBall2.velocity.x = vx2;
-    enemyBall2.velocity.y = vy2;
-}
+enemyBallVelocity(enemyBall1)
+enemyBallVelocity(enemyBall2)
 
 var addTile = []
 let tilepos = { x: 0, y: 0 }
@@ -334,27 +298,13 @@ function addTiles() {
         addTile.pop();
         addTile.push(tilepos);
 
-        // console.log(addTile)
-
-
-        // if (player.position.pos.xinit == addTile.pop().x) {
-        //     addTile.push(player.position.pos.xinit);
-        //     player.position.pos.xinit = player.position.x
-        //     addTile.push(player.position.pos.xinit);
-        // }
-        // if (player.yinit == addTile.pop()) {
-        //     addTile.push(player.position.pos.xinit);
-        //     player.position.pos.xinit = player.position.x
-        //     addTile.push(player.position.pos.xinit);
-        // }
+       
     }
 
 
     else {
 
         tilepos = { x: player.position.x, y: player.position.y }
-        // dot =  new Dots({position: tilepos , color: 'white'});
-        // dot.draw();
         tilePrev = addTile.pop();
         tilePrev2 = addTile.pop()
 
@@ -368,12 +318,7 @@ function addTiles() {
             addTile.push(tilepos)
 
         }
-        // if (s != tilepos ) {
-        //     addTile.push(s)
-        //     addTile.push(tilepos)
-        // }
-        // else{addTile.push(s)}
-    }
+      }
 
 
 
@@ -382,15 +327,6 @@ function addTiles() {
 
 // ADD TILES TO THE GAME
 function drawTile() {
-    // if(checkTile(player) && addTile.length >1 ){
-    //     addTile.forEach(tilepos =>{
-    //         row = Math.floor(tilepos.y / tileHeight)
-    //         column = Math.floor(tilepos.x / tileWidth)
-    //         game[row][column] =1;
-
-
-    //     })
-    // let dot =  new Dots({position: tilepos , color: 'white'});
     addDot.forEach(tiled => {
         let dot = new Dots({ position: tiled, color: 'white' });
         dot.draw();
@@ -414,11 +350,6 @@ function drawTile() {
             columnI = Math.floor(tileInit.x / tileWidth)
 
             checkConnection(rowF, columnF, rowI, columnI)
-            // console.log(stats);
-            // console.log("============================================================")
-            // console.log('rowF = '+rowF + "     rowI = "+ rowI )
-            // console.log('columnF = '+columnF + "     columnI = "+ columnI )
-            // console.log("============================================================")
             if (rowF - rowI == 0) {
                 for (i = Math.min(columnF, columnI); i <= Math.max(columnF, columnI); i++) {
 
@@ -443,23 +374,11 @@ function drawTile() {
         let tiled = { x: 0, y: 0 }
 
         addDot.push(tiled);
-        // console.log(game)
-        // updateGround()
     }
-    // if(addTile.pop() == )
-
 }
-c = 0;
 //  checking connection between tiles
 function checkConnection(rowF, columnF, rowI, columnI) {
-
-    // for(i =0 ; i<20 ; i++){
-    //     for(j =0 ; j<20 ; j++){
-
-
-    //     }
-    // }
-
+    c=0;
     if (rowF - rowI == 0) {
         for (i = 0; i < 20; i++) {
             if (game[rowF][i] == 1) { c++; }
@@ -468,11 +387,8 @@ function checkConnection(rowF, columnF, rowI, columnI) {
     }
     
     if (c >= 20) {
-        console.log("c = " + c)
-        // console.log("heyyyyyyyyyyy")
         disFromX = rowF * tileHeight;
         if ((enemyBall1.position.y >= disFromX && enemyBall2.position.y >= disFromX)) {
-            console.log("dis form x = " + disFromX + " = enemyBall2.position.y = " + enemyBall2.position.y + " = enemyBall2.position.y =" + enemyBall2.position.y)
             for (i = 0; i < rowF; i++) {
                 for (j = 0; j < 20; j++) {
                     game[i][j] = 1
@@ -493,9 +409,7 @@ function checkConnection(rowF, columnF, rowI, columnI) {
         }
         c = c + (Math.abs(rowF - rowI))
     }
-    console.log("c = " + c)
-    if (c >= 20) {
-        console.log("heyyyyyyyyyyy")
+        if (c >= 20) {
         disFromY = columnF * tileWidth;
         if ((enemyBall1.position.x >= disFromY && enemyBall2.position.x >= disFromY)) {
             for (i = 0; i < columnF; i++) {
@@ -512,28 +426,7 @@ function checkConnection(rowF, columnF, rowI, columnI) {
             }
         }
     }
-    c = 0;
-
-    // if(rowCurr == rowF && columnCurr == columnF){
-    //     return true;
-    // }
-
-    // if(game[rowCurr+1][columnCurr]==1){
-    //     stats = checkConnection( rowF , columnF , rowI , columnI , rowCurr+1 , columnCurr)
-    // }
-    // // else{return false}
-
-    // if(game[rowCurr][columnCurr+1]==1){
-    //     stats = checkConnection( rowF , columnF , rowI , columnI , rowCurr , columnCurr+1)
-    // }
-    // // else{return false}
-
-    // if(game[rowCurr][columnCurr-1]==1){
-    //     stats = checkConnection( rowF , columnF , rowI , columnI , rowCurr , columnCurr-1)
-    // }
-    // // else{return false}
-
-
+    
 }
 
 
@@ -555,8 +448,7 @@ function ReboundEnemy(enemyBall) {
     tx = Math.abs((enemyBall.position.x - enemyBall.position.xinit) / (enemyBall.velocity.x))
     ty = Math.abs((enemyBall.position.y - enemyBall.position.yinit) / (enemyBall.velocity.y))
 
-    // console.log(" tx =  "+ tx+ " ty = "+ty)
-
+  
     enemyBall.position.yinit = enemyBall.position.y
     enemyBall.position.xinit = enemyBall.position.x
     if (tx > ty) {
@@ -572,7 +464,6 @@ function ReboundEnemy(enemyBall) {
     }
 
     if (enemyBall.position.x - enemyBall.radius <= 2) {
-        console.log('we are colliding x')
         enemyBall.velocity.x *= -1;
     }
     if (enemyBall.position.x + enemyBall.radius >= innerWidth - 22) {
@@ -580,7 +471,6 @@ function ReboundEnemy(enemyBall) {
 
     }
     if (enemyBall.position.y + enemyBall.radius >= innerHeight - 22) {
-        console.log('we are colliding y ')
         enemyBall.velocity.y *= -1;
     }
     if (enemyBall.position.y - enemyBall.radius <= 2) {
@@ -592,7 +482,6 @@ function checkOutBoundsBallS() {
 
     // FOR GAME BALL
     if (player.position.x - player.radius <= 2 && keys[2] == 1) {
-        console.log('we are colliding x')
         player.velocity.x = 0
     }
     if (player.position.x + player.radius >= innerWidth - 22 && keys[3] == 1) {
@@ -600,7 +489,6 @@ function checkOutBoundsBallS() {
 
     }
     if (player.position.y + player.radius >= innerHeight - 22 && keys[1] == 1) {
-        console.log('we are colliding y ')
         player.velocity.y = 0
     }
     if (player.position.y - player.radius <= 2 && keys[0] == 1) {
@@ -609,7 +497,6 @@ function checkOutBoundsBallS() {
 
     // FOR ENEMYBALL1
     if (enemyBall1.position.x - enemyBall1.radius <= 2) {
-        console.log('we are colliding x')
         enemyBall1.velocity.x *= -1;
     }
     if (enemyBall1.position.x + enemyBall1.radius >= innerWidth - 22) {
@@ -617,7 +504,6 @@ function checkOutBoundsBallS() {
 
     }
     if (enemyBall1.position.y + enemyBall1.radius >= innerHeight - 22) {
-        console.log('we are colliding y ')
         enemyBall1.velocity.y *= -1;
     }
     if (enemyBall1.position.y - enemyBall1.radius <= 2) {
@@ -626,7 +512,6 @@ function checkOutBoundsBallS() {
 
     // FOR ENEMY BALL 2
     if (enemyBall2.position.x - enemyBall2.radius <= 2) {
-        console.log('we are colliding x')
         enemyBall2.velocity.x *= -1;
     }
     if (enemyBall2.position.x + enemyBall2.radius >= innerWidth - 22) {
@@ -634,7 +519,7 @@ function checkOutBoundsBallS() {
 
     }
     if (enemyBall2.position.y + enemyBall2.radius >= innerHeight - 22) {
-        console.log('we are colliding y ')
+        
         enemyBall2.velocity.y *= -1;
     }
     if (enemyBall2.position.y - enemyBall2.radius <= 2) {
@@ -652,17 +537,9 @@ function checkOutBoundsEnemyBall(tile) {
             || (enemyBall1.position.y + enemyBall1.radius <= tile.position.y + tileHeight / 2
                 && enemyBall1.position.y + enemyBall1.radius >= tile.position.y - tileHeight / 2))
         && game[tile.position.ith][tile.position.jth] != 0) {
-        // if(checkTile(enemyBall1)){
         game[tile.position.ith][tile.position.jth] = 0;
         ReboundEnemy(enemyBall1)
-        // console.log(" ball pos y ==           " + enemyBall1.position.y);
-        // console.log("radius                   " + enemyBall1.radius);
-        // console.log(" tile pos y ==           " + tile.position.y);
-        // console.log("tile height  ==           " + tileHeight);
-        // console.log('rowth =                  '+tile.position.ith +'  columnth = '+tile.position.jth)
-        // console.log('row enemy =           '+enemyBall1.position.xth +'  column enemy = '+enemyBall1.position.yth)
-        // console.log('cond 1 sats');
-
+       
     }
     else if (((enemyBall2.position.x - enemyBall2.radius <= tile.position.x + tileWidth / 2
         && enemyBall2.position.x - enemyBall2.radius >= tile.position.x - tileWidth / 2)
@@ -673,23 +550,14 @@ function checkOutBoundsEnemyBall(tile) {
             || (enemyBall2.position.y + enemyBall2.radius <= tile.position.y + tileHeight / 2
                 && enemyBall2.position.y + enemyBall2.radius >= tile.position.y - tileHeight / 2))
         && game[tile.position.ith][tile.position.jth] != 0) {
-        // else if(checkTile(enemyBall1)){
         game[tile.position.ith][tile.position.jth] = 0;
         ReboundEnemy(enemyBall2)
-        // console.log(" ball pos y ==           " + enemyBall1.position.y);
-        // console.log("radius                   " + enemyBall1.radius);
-        // console.log(" tile pos y ==           " + tile.position.y);
-        // console.log("tile height  ==           " + tileHeight);
-        // console.log('rowth =                  '+tile.position.ith +'  columnth = '+tile.position.jth)
-        // console.log('row enemy =           '+enemyBall1.position.xth +'  column enemy = '+enemyBall1.position.yth)
-        // console.log('cond 1 sats');
-
+       
     }
 
 }
 // Event Listners
 addEventListener('keydown', ({ key }) => {
-    // console.log(key);
     switch (key) {
         case 'ArrowDown':
             keys[1] = 1
@@ -715,7 +583,6 @@ addEventListener('keydown', ({ key }) => {
 }
 )
 addEventListener('keyup', ({ key }) => {
-    // console.log(key);
     switch (key) {
         case 'ArrowDown':
             keys[1] = 0
@@ -737,25 +604,17 @@ addEventListener('keyup', ({ key }) => {
 }
 )
 function checkLose() {
-    // console.log("======================================================================")
-    // console.log("enemyBall1.position = "+enemyBall1.position .x  + " + "+ enemyBall1.position.y)
-    // console.log("player.position = "+player.position.x + " + "+player.position.y)
-    // console.log("enemyBall2.position = "+enemyBall2.position.x + " + "+enemyBall2.position.y)
-    // console.log("======================================================================")
     if (((enemyBall1.position.x - 25 <= player.position.x && enemyBall1.position.x + 25 >= player.position.x) && (enemyBall1.position.y - 25 <= player.position.y && enemyBall1.position.y + 25 >= player.position.y)) || ((enemyBall2.position.x - 25 <= player.position.x && enemyBall2.position.x + 25 >= player.position.x) && (enemyBall2.position.y - 25 <= player.position.y && enemyBall2.position.y + 25 >= player.position.y))) {
         gameOver = true;
-        console.log("=================  Lost ===============")
     }
     addDot.forEach(dot => {
         if (((enemyBall1.position.x - 25 <= dot.x && enemyBall1.position.x + 25 >= dot.x) && (enemyBall1.position.y - 25 <= dot.y && enemyBall1.position.y + 25 >= dot.y)) || ((enemyBall2.position.x - 25 <= dot.x && enemyBall2.position.x + 25 >= dot.x) && (enemyBall2.position.y - 25 <= dot.y && enemyBall2.position.y + 25 >= dot.y))) {
             dot.color = 'red';
             gameOver = true;
-            console.log("=================  Lost ===============")
         }
     })
 }
 
-const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 function checkStatus() {
     if (gameOver == true && win == false) {
@@ -763,19 +622,14 @@ function checkStatus() {
         for (i = 0; i < 100000000; i++) {
 
         }
-        // await sleep(2000);
         window.location.href = '../screens/lose.html';
-        // window.location.href = '../../index.html';
-
     }
     if (gameOver == true && win == true) {
 
         for (i = 0; i < 100000000; i++) {
 
         }
-        // await sleep(2000);
         window.location.href = '../screens/win.html';
-        // window.location.href = '../../index.html';
 
     }
 }
@@ -790,9 +644,7 @@ function checkWin() {
 // Main Function
 function main(ctime) {
     window.requestAnimationFrame(main);
-    // if(qwe == 0){init();}
-
-    // console.log(ctime);
+  
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     updateGround();
 
@@ -800,10 +652,6 @@ function main(ctime) {
 
     enemyBall2.update();
     enemyBall1.update();
-
-    // if ((ctime - lastTime) / 1000 < 1 / 6) {
-    //     return;
-    // }
     checkWin()
     checkLose();
     checkStatus();
