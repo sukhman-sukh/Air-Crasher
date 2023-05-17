@@ -78,7 +78,7 @@ class Dots {
     }
 }
 // Enemy Ball
-class enemyBall {
+class EnemyBall {
         constructor({ position, velocity, color }) {
         this.position = position
         this.velocity = velocity
@@ -158,7 +158,7 @@ while (game[ball_y][ball_x] != 0) {
 
 
 // instance of enemy balls
-var enemyBall1 = new enemyBall({
+var enemyBall1 = new EnemyBall({
     position: {
         x: ball_y * tileWidth + tileWidth / 2,
         y: ball_x * tileHeight + tileHeight / 2,
@@ -183,7 +183,7 @@ while (game[ball_y][ball_x] != 0) {
 }
 
 // instance of enemy balls
-var enemyBall2 = new enemyBall({
+var enemyBall2 = new EnemyBall({
     position: {
         x: ball_x * tileWidth + tileWidth / 2,
         y: ball_y * tileHeight + tileHeight / 2,
